@@ -1,0 +1,59 @@
+
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './screens/HomeScreen';
+import DonationScreen from './screens/DonationScreen';
+import ThankYouScreen from './screens/ThankYouScreen';
+
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Donation" component={DonationScreen} />
+        <Stack.Screen name="ThankYou" component={ThankYouScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+import React from 'react';
+import { View, Button, Text } from 'react-native';
+
+const HomeScreen = ({ navigation }) => {
+  return (
+    <View>
+      <Text>Welcome to our Donation App</Text>
+      <Button
+        title="Make a Donation"
+        onPress={() => navigation.navigate('Donation')}
+      />
+    </View>
+  );
+};
+
+import React, { useState } from 'react';
+import { View, TextInput, Button, Alert } from 'react-native';
+
+const DonationScreen = ({ navigation }) => {
+  const [amount, setAmount] = useState('');
+
+  const handleDonate = () =>{
+    Alert.alert('Thank You!', `You have donated $${amount}`);
+    navigation.navigate('ThankYou');
+  };
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Enter donation amount"
+        keyboardType="numeric"
+        value={amount}
+        onChangeText={text => setAmount(text)}
+      />
+      <Button title="Donate" onPress={handleDonate} />
+    </View>
+  );
+};
